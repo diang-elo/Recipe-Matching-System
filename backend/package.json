@@ -1,0 +1,11 @@
+{
+  "name": "recipe-matching-system-backend",
+  "version": "1.0.0",
+  "description": "recipe matching system for cps714 project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}

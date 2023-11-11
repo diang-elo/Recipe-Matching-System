@@ -1,4 +1,5 @@
 import express, {Request, Response} from 'express'
+import { getIngredients } from '../db/scripts';
 const router = express.Router()
 
 export type Ingredient = {
@@ -38,8 +39,10 @@ const data: Ingredient[] = [
     }
 ]
 
-router.get(`/`, (req: Request,res: Response)=> {
-    res.send(data)
+//use functions written in db folder
+router.get(`/`, async (req: Request,res: Response)=> {
+    const ingredients = await getIngredients()
+    res.send(ingredients)
 })
 
 router.post(`/`, (req: Request,res: Response)=> {

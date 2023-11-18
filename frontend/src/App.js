@@ -1,4 +1,5 @@
 import "./App.css";
+import Info from "./screens/Info";
 import Landing from "./screens/Landing";
 import Recipes from "./screens/Recipes";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/recipe/:term" element={<Recipes />} />
+          <Route path="/info/:term" element={<Info />} />
         </Routes>
       </div>
     </Router>

@@ -13,7 +13,9 @@ function Landing() {
   return (
     <div>
       <div class="grid place-items-center h-screen">
-        <h1 class="mb-4 text-4xl font-bold text-gray-900">Recipe Finder</h1>
+        <h1 class="mb-4 text-6xl font-bold text-gray-900 cursive-font">
+          Recipe Finder
+        </h1>
         <form class="sm:w-3/5 w-80">
           <label
             for="default-search"

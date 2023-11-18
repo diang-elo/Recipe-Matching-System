@@ -3,6 +3,7 @@ import axios from "axios";
 import "../App.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import RecipeCard from "../components/cards/RecipeCard";
 
 function Recipes() {
   const [searchedRecipe, setSearchedRecipe] = useState([]);
@@ -25,10 +26,10 @@ function Recipes() {
   }, [params.term]);
 
   return (
-    <div class="bg-red-100">
+    <div class="">
       {searchedRecipe.map((item) => {
         return (
-          <div class="grid grid-cols-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0">
             {/* ToDo: Design card template for each recipe  */}
           </div>
         );

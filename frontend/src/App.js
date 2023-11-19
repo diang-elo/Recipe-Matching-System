@@ -8,15 +8,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-      <nav>
-          <Link to ="/" >Home</Link>
-          <Link to ="/todays-recipe" >Today's Recipe</Link>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/todays-recipe">Today's Recipe</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/recipe/:term" element={<Recipes />} />
           <Route path="/info/:term" element={<Info />} />
-          <Route path="/todays-recipe" element={<TodaysRecipe></TodaysRecipe>}></Route>
+          <Route path="/todays-recipe" element={<TodaysRecipe />}></Route>
         </Routes>
       </div>
     </Router>

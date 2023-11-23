@@ -32,11 +32,15 @@ const data = [
     }
 ];
 router.get(`/`, (req, res) => {
-    var _a;
-    const searchTerm = (((_a = req.query) === null || _a === void 0 ? void 0 : _a.name) ? req.query.name : "");
+    var _a, _b;
+    const nameSearchTerm = (((_a = req.query) === null || _a === void 0 ? void 0 : _a.name) ? req.query.name : "");
+    const categorySearchTerm = (((_b = req.query) === null || _b === void 0 ? void 0 : _b.category) ? req.query.category : "");
     let results = data;
-    if ((searchTerm === null || searchTerm === void 0 ? void 0 : searchTerm.trim().length) > 0) {
-        results = results.filter(res => res.name.includes(searchTerm));
+    if ((nameSearchTerm === null || nameSearchTerm === void 0 ? void 0 : nameSearchTerm.trim().length) > 0) {
+        results = results.filter(res => res.name.includes(nameSearchTerm));
+    }
+    if ((categorySearchTerm === null || categorySearchTerm === void 0 ? void 0 : categorySearchTerm.trim().length) > 0) {
+        results = results.filter(res => { var _a; return (_a = res.category) === null || _a === void 0 ? void 0 : _a.name.includes(categorySearchTerm); });
     }
     res.send(results);
 });

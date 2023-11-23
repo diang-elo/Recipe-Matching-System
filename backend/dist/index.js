@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotFoundError = exports.ValidationError = void 0;
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/ingredients/index"));
-const index_2 = __importDefault(require("./src/sessions/index"));
+const index_2 = __importDefault(require("./src/recipe/index"));
 const app = (0, express_1.default)();
 const PORT = 3000;
 class ValidationError extends Error {
@@ -17,7 +17,7 @@ class NotFoundError extends Error {
 exports.NotFoundError = NotFoundError;
 app.use(express_1.default.json());
 app.use('/ingredients', index_1.default);
-app.use('/sessions', index_2.default);
+app.use('/recipes', index_2.default);
 app.listen(PORT, () => {
     console.log(`listening on port: ${PORT}`);
 });

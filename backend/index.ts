@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import ingredientRouter from './src/ingredients/index'
-import sessionRouter from './src/sessions/index'
+import sessionRouter from './src/recipe/index'
 const app = express()
 const PORT = 3000
 export class ValidationError extends Error {}
@@ -8,7 +8,7 @@ export class NotFoundError extends Error {}
 
 app.use(express.json());
 app.use('/ingredients', ingredientRouter)
-app.use('/sessions', sessionRouter)
+app.use('/recipes', sessionRouter)
 
 app.listen(PORT, ()=>{
     console.log(`listening on port: ${PORT}`)

@@ -24,7 +24,7 @@ const data = [
     },
     {
         id: 2,
-        name: 'Broccoli',
+        name: 'Broccoli Test',
         category: {
             id: 0,
             name: "Vegetable"
@@ -32,7 +32,13 @@ const data = [
     }
 ];
 router.get(`/`, (req, res) => {
-    res.send(data);
+    var _a;
+    const searchTerm = (((_a = req.query) === null || _a === void 0 ? void 0 : _a.name) ? req.query.name : "");
+    let results = data;
+    if ((searchTerm === null || searchTerm === void 0 ? void 0 : searchTerm.trim().length) > 0) {
+        results = results.filter(res => res.name.includes(searchTerm));
+    }
+    res.send(results);
 });
 router.post(`/`, (req, res) => {
     const newIngredient = req.body;

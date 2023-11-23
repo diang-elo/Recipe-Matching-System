@@ -36,6 +36,7 @@ router.post('/:sessionID/generateRecipe', (req, res) => {
     const recipe = {
         id: 0,
         name: 'The ultimate Test recipe',
+        image: 'https://images.pexels.com/photos/1640771/pexels-photo-1640771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         ingredients: (_a = session === null || session === void 0 ? void 0 : session.ingredients) !== null && _a !== void 0 ? _a : [],
         directions: [{ indx: 0, text: 'First boil water' }, { indx: 1, text: 'Then pass CPS714' }],
         cookTime: '1 hr.'

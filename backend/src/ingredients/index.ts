@@ -30,7 +30,7 @@ const data: Ingredient[] = [
     },
     {
         id: 2,
-        name: 'Broccoli',
+        name: 'Broccoli Test',
         category: {
             id: 0,
             name: "Vegetable"
@@ -39,7 +39,12 @@ const data: Ingredient[] = [
 ]
 
 router.get(`/`, (req: Request,res: Response)=> {
-    res.send(data)
+    const searchTerm = (req.query?.name ? req.query.name : "" )as string;
+    let results = data
+    if(searchTerm?.trim().length > 0) {
+        results = results.filter(res=> res.name.includes(searchTerm))
+    }
+    res.send(results)
 })
 
 router.post(`/`, (req: Request,res: Response)=> {

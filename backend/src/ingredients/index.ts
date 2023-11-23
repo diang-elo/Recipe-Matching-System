@@ -39,10 +39,14 @@ const data: Ingredient[] = [
 ]
 
 router.get(`/`, (req: Request,res: Response)=> {
-    const searchTerm = (req.query?.name ? req.query.name : "" )as string;
+    const nameSearchTerm = (req.query?.name ? req.query.name : "" )as string;
+    const categorySearchTerm = (req.query?.category ? req.query.category : "" )as string;
     let results = data
-    if(searchTerm?.trim().length > 0) {
-        results = results.filter(res=> res.name.includes(searchTerm))
+    if(nameSearchTerm?.trim().length > 0) {
+        results = results.filter(res=> res.name.includes(nameSearchTerm))
+    }
+    if(categorySearchTerm?.trim().length > 0) {
+        results = results.filter(res=> res.category?.name.includes(categorySearchTerm))
     }
     res.send(results)
 })

@@ -7,6 +7,18 @@ import { router } from "./db/routes/posts";
 const app = express();
 const PORT = 3000;
 
+app.use(express.json());
+app.use("/ingredients", ingredientRouter);
+app.use("/sessions", sessionRouter);
+
+app.listen(PORT, () => {
+  console.log(`listening to port: ${PORT}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("welcome to coe714 recipe-matching-project");
+});
+
 connectToDatabase()
   .then(() => {
     app.use("/recipes", router);
@@ -19,15 +31,3 @@ connectToDatabase()
     console.error("Database connection failed", error);
     process.exit();
   });
-
-app.use(express.json());
-app.use("/ingredients", ingredientRouter);
-app.use("/sessions", sessionRouter);
-
-app.listen(PORT, () => {
-  console.log(`listening on port: ${PORT}`);
-});
-
-app.get("/", (req, res) => {
-  res.send("welcome to coe714 recipe-matching-project");
-});

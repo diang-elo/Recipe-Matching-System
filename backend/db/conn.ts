@@ -10,14 +10,13 @@ export async function connectToDatabase() {
     process.env.DB_CONN_STRING ??
     "mongodb+srv://eokereke:pT7UgWnHWkP8Uo3t@cluster0.e8xv6gg.mongodb.net/?retryWrites=true&w=majority";
   const collect: string = process.env.COLLECTION_NAME ?? "Cluster0";
+  const dbname: string = process.env.DB_NAME ?? "recipes";
 
-  const client: mongoDB.MongoClient = new mongoDB.MongoClient(
-    dbstr //error because of being undefined aync stuff idek I will fix later
-  );
+  const client: mongoDB.MongoClient = new mongoDB.MongoClient(dbstr);
 
   await client.connect();
 
-  const db: mongoDB.Db = client.db(process.env.DB_NAME);
+  const db: mongoDB.Db = client.db(dbname);
 
   const recipesCollection: mongoDB.Collection = db.collection(collect);
 

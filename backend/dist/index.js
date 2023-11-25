@@ -10,7 +10,7 @@ const index_1 = __importDefault(require("./src/ingredients/index"));
 const index_2 = __importDefault(require("./src/recipe/index"));
 const app = (0, express_1.default)();
 const cors = require('cors');
-const PORT = 3000;
+const PORT = 10000;
 class ValidationError extends Error {
 }
 exports.ValidationError = ValidationError;

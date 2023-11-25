@@ -5,7 +5,7 @@ import sessionRouter from './src/recipe/index';
 
 const app = express();
 const cors = require('cors');
-const PORT = 3000;
+const PORT = 10000;
 
 export class ValidationError extends Error {}
 export class NotFoundError extends Error {};

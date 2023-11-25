@@ -4,7 +4,7 @@
   "description": "recipe matching system for cps714 project",
   "main": "index.ts",
   "scripts": {
-    "build": "npx tsc",
+    "build": "npm i",
     "test": "test",
     "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""

@@ -9,7 +9,7 @@ function Info() {
   const getSearch = (e) => {
     axios
       .get(
-        "https://recipe-backend-2op5.onrender.com//recipes/byId?id=" +
+        "https://recipe-backend-2op5.onrender.com/recipes/byId?id=" +
           params.term
       )
       .then(function (response) {

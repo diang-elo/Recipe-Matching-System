@@ -2,10 +2,12 @@ import express, { NextFunction, Request, Response } from 'express'
 import ingredientRouter from './src/ingredients/index'
 import sessionRouter from './src/recipe/index'
 const app = express()
+const cors = require('cors');
 const PORT = 3000
 export class ValidationError extends Error {}
 export class NotFoundError extends Error {}
 
+app.use(cors())
 app.use(express.json());
 app.use('/ingredients', ingredientRouter)
 app.use('/recipes', sessionRouter)

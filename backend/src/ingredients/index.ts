@@ -11,7 +11,7 @@ export type IngredientCategory = {
     id: number;
     name: string
 }
-const data: Ingredient[] = [
+export const data: Ingredient[] = [
     {
         id: 0,
         name: 'Broccoli',

@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express'
 const router = express.Router()
-import { Ingredient } from '../ingredients'
+import { Ingredient, data } from '../ingredients'
 
 type Recipe = {
     id: number;
@@ -15,7 +15,16 @@ type Recipe = {
 }
 
 router.post('/', (req: Request, res: Response)=>{
-    const ingredients = req.body as Ingredient[]
+    const ingredientReq = req.body as number[]
+    const ingredients: Ingredient[] = [];
+    ingredientReq.forEach(ing=> {
+        const ingData = data.find(dat=> dat.id === ing)
+        if(ingData) {
+            ingredients.push(ingData)
+        }
+    }
+        )
+    
     const recipe: Recipe = {
         id: 0,
         name: 'The ultimate Test recipe',

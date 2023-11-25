@@ -1,12 +1,37 @@
 import React from "react";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 function Info() {
-  return (
+  const [searchRecipe, setSearchedRecipe] = useState(null);
+  let params = useParams();
+
+  const getSearch = (e) => {
+    axios
+      .get("http://localhost:3000/recipes/byId?id=" + params.term)
+      .then(function (response) {
+        console.log(response);
+        setSearchedRecipe(response.data.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    getSearch(params.term);
+  }, [params.term]);
+
+  console.log(searchRecipe);
+
+  return !searchRecipe ? (
+    <div>Error</div>
+  ) : (
     <>
       <div className=" text-lime-800 py-6">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold cursive-font">
-            Caramel Mocha Recipe
+            {searchRecipe.name}
           </h1>
         </div>
       </div>
@@ -14,7 +39,7 @@ function Info() {
         {/* Recipe Image */}
 
         <img
-          src="https://athome.starbucks.com/sites/default/files/styles/homepage_banner_xlarge/public/2021-06/CaffeMocha_Header.jpg.webp?itok=O9FqK5Y_"
+          src={searchRecipe.img}
           alt="Recipe"
           className="w-full h-64 object-contain rounded-full mb-6"
         />
@@ -24,26 +49,24 @@ function Info() {
           <h2 className="text-2xl font-bold text-lime-800">
             Recipe Description
           </h2>
-          <p className="text-gray-600">Recipe description</p>
+          <p className="text-gray-600">{searchRecipe.desc}</p>
         </div>
         {/* Recipe Ingredients */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-lime-800">Ingredients</h2>
           <ul className="list-disc list-inside text-gray-600">
-            <li>Ingredient 1</li>
-            <li>Ingredient 2</li>
-            <li>Ingredient 3</li>
-            {/* Add more ingredients as needed */}
+            {Object.values(searchRecipe.ingredients).map((value, index) => (
+              <li key={index}>{value}</li>
+            ))}
           </ul>
         </div>
         {/* Recipe Instructions */}
         <div>
           <h2 className="text-2xl font-bold text-lime-800">Instructions</h2>
           <ol className="list-decimal list-inside text-gray-600">
-            <li>Step 1: Instruction 1</li>
-            <li>Step 2: Instruction 2</li>
-            <li>Step 3: Instruction 3</li>
-            {/* Add more instructions as needed */}
+            {searchRecipe.preperationSteps.map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
           </ol>
         </div>
       </div>

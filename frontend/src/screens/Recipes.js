@@ -8,32 +8,66 @@ import RecipeCard from "../components/cards/RecipeCard";
 function Recipes() {
   const [searchedRecipe, setSearchedRecipe] = useState([]);
   let params = useParams();
+  let [key, value] = params.term.split("=");
+
+  let endpoint = "";
+  let request = "";
+  if (key === "byIngredient") {
+    endpoint = "http://localhost:3000/recipes/byIngredients";
+    request = "post";
+    value = value.split(",").map(Number);
+    value = { ingredientIds: value };
+  } else if (key === "byDiet") {
+    request = "get";
+    endpoint = "http://localhost:3000/recipes/byDiet?diet=" + value;
+  } else if (key === "byName") {
+    request = "get";
+    endpoint = "http://localhost:3000/recipes/byName?name=" + value;
+  }
 
   const getSearch = (e) => {
-    axios
-      .get("http://localhost:3000/recipe/" + params.term)
-      .then(function (response) {
-        console.log(response);
-        setSearchedRecipe(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    if (request === "post") {
+      axios
+        .post(endpoint, value)
+        .then(function (response) {
+          console.log(response);
+          setSearchedRecipe(response.data.data);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    } else if (request === "get") {
+      axios
+        .get(endpoint)
+        .then(function (response) {
+          console.log(response);
+          setSearchedRecipe(response.data.data);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
+    }
   };
   useEffect(() => {
     getSearch(params.term);
   }, [params.term]);
 
-  return (
-    <div class="">
-      {searchedRecipe.map((item) => {
-        return (
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0">
-            {/* ToDo: Design card template for each recipe  */}
-          </div>
-        );
-      })}
+  console.log(searchedRecipe.length);
+
+  return searchedRecipe.length === 0 ? (
+    <div className="flex items-center justify-center h-screen">
+      <div className="text-4xl">Does not exist</div>
+    </div>
+  ) : (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+      {searchedRecipe.map((item) => (
+        <div key={item.id}>
+          {/* ToDo: Design card template for each recipe */}
+          <RecipeCard title={item.name} img={item.img} recipeID={item.id} />
+        </div>
+      ))}
     </div>
   );
 }

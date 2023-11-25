@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function RecipeCard({ title, subTitle, img }) {
+function RecipeCard({ title, subTitle, img, recipeID }) {
+  const navigate = useNavigate();
   return (
     <div class="max-w-[22rem] bg-white rounded-2xl overflow-hidden shadow-lg transition-transform duration-300 transform hover:scale-105 mx-2 my-8">
       <img
@@ -12,7 +14,10 @@ function RecipeCard({ title, subTitle, img }) {
         <h2 class="text-2xl font-bold mb-2 text-gray-800">{title}</h2>
         <p class="text-gray-600">{subTitle}</p>
         <div class="flex justify-start mt-4">
-          <button class="bg-lime-800  text-white px-4 py-2 rounded hover:bg-lime-900 transition-colors">
+          <button
+            onClick={() => navigate("/info/" + recipeID)}
+            class="bg-lime-800  text-white px-4 py-2 rounded hover:bg-lime-900 transition-colors"
+          >
             Explore
           </button>
         </div>

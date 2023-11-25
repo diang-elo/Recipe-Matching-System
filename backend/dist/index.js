@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotFoundError = exports.ValidationError = void 0;
 const express_1 = __importDefault(require("express"));
 const mongodb_1 = require("mongodb");
-const index_1 = __importDefault(require("./src/ingredients/index")); // Correcting the import path
+const index_1 = __importDefault(require("./src/ingredients/index"));
 const index_2 = __importDefault(require("./src/recipe/index"));
 const app = (0, express_1.default)();
 const cors = require('cors');
@@ -27,7 +27,7 @@ mongodb_1.MongoClient.connect(mongoUrl)
     // Attach the db instance to the app
     app.set('db', db);
     console.log('Connected to MongoDB');
-    // Set up routes and start the server
+    // Set up routes 
     app.use(cors());
     app.use(express_1.default.json());
     app.use('/ingredients', index_1.default);

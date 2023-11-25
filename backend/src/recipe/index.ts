@@ -1,65 +1,171 @@
-import express, {Request, Response} from 'express'
-const router = express.Router()
-import { Ingredient } from '../ingredients'
+import express, { Request, Response } from 'express';
+import { Db, ObjectId  } from 'mongodb';
 
-type Recipe = {
-    id: number;
-    name: string;
-    image: string
-    ingredients: Ingredient[];
-    directions: {
-        indx: number;
-        text: string
-    }[];
-    cookTime: string;
-}
+const sessionRouter = express.Router();
 
-router.post('/', (req: Request, res: Response)=>{
-    const ingredients = req.body as Ingredient[]
-    const recipe: Recipe = {
-        id: 0,
-        name: 'The ultimate Test recipe',
-        image: 'https://images.pexels.com/photos/1640771/pexels-photo-1640771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-        ingredients: ingredients ?? [],
-        directions: [{indx:0, text: 'First boil water'}, {indx: 1, text:'Then pass CPS714'}],
-        cookTime: '1 hr.'
+sessionRouter.get('/', async (req: Request, res: Response) => {
+  try {
+    const db: Db = req.app.get('db');
+    const recipesCollection = db.collection('recipes');
+
+    const recipes = await recipesCollection.find({}).toArray();
+
+    res.status(200).json({
+      status: 'success',
+      data: recipes,
+    });
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+});
+
+sessionRouter.post('/byIngredients', async (req: Request, res: Response) => {
+    try {
+      const db: Db = req.app.get('db');
+      const recipesCollection = db.collection('recipes');
+  
+      // Ensure the request body contains an array of ingredient IDs
+      const ingredientIds = req.body.ingredientIds;
+      if (!Array.isArray(ingredientIds)) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid input. Expected an array of ingredient IDs.',
+        });
+      }
+  
+      // Construct the query to match recipes that have keys in the "ingredients" object matching any of the specified ingredient IDs
+      const query = {
+        $or: ingredientIds.map((id) => ({ [`ingredients.${id}`]: { $exists: true } })),
+      };
+  
+      // Find recipes based on the constructed query
+      const recipes = await recipesCollection.find(query).toArray();
+  
+      res.status(200).json({
+        status: 'success',
+        data: recipes,
+      });
+    } catch (error) {
+      console.error('Error fetching recipes by ingredients:', error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
     }
-    res.send(recipe)
-})
+  });
 
-router.get('/', (req: Request, res: Response)=>{
-    const searchText = (req.query.name ?? "") as string
-    let results = [
-        {
-            id: 0,
-            name: 'The ultimate Test recipe 1',
-            image: 'https://images.pexels.com/photos/1640771/pexels-photo-1640771.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            ingredients: [],
-            directions: [{indx:0, text: 'First boil water'}, {indx: 1, text:'Then pass CPS714'}],
-            cookTime: '1 hr.'
-        },
-        {
-            id: 0,
-            name: 'The ultimate Test recipe 2',
-            image: 'https://images.pexels.com/photos/4099123/pexels-photo-4099123.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            ingredients: [],
-            directions: [{indx:0, text: 'First boil water'}, {indx: 1, text:'Then pass CPS714'}],
-            cookTime: '1 hr.'
-        },
-        {
-            id: 0,
-            name: 'The ultimate Test recipe 3',
-            image: 'https://images.pexels.com/photos/5966431/pexels-photo-5966431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            ingredients: [],
-            directions: [{indx:0, text: 'First boil water'}, {indx: 1, text:'Then pass CPS714'}],
-            cookTime: '1 hr.'
-        }
-    ]
-
-    if(searchText.length > 0) {
-        results = results.filter(res=> res.name.includes(searchText))
+  sessionRouter.get('/byId', async (req: Request, res: Response) => {
+    try {
+      const db: Db = req.app.get('db');
+      const recipesCollection = db.collection('recipes');
+  
+      // Extract the recipe ID from the query parameters
+      const recipeId = req.query.id;
+  
+      // Validate that a valid ID is provided
+      if (!recipeId || typeof recipeId !== 'string') {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid input. Recipe ID is required.',
+        });
+      }
+  
+      // Find the recipe by the "id" field
+      const recipe = await recipesCollection.findOne({
+        'id': parseInt(recipeId), // Assuming "id" is stored as a number
+      });
+  
+      // Check if the recipe is found
+      if (!recipe) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Recipe not found.',
+        });
+      }
+  
+      res.status(200).json({
+        status: 'success',
+        data: recipe,
+      });
+    } catch (error) {
+      console.error('Error fetching recipe by ID:', error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
     }
-    res.send(results)
-})
+  });
 
-export default router
+  sessionRouter.get('/byDiet', async (req: Request, res: Response) => {
+    try {
+      const db: Db = req.app.get('db');
+      const recipesCollection = db.collection('recipes');
+  
+      // Extract the diet from the query parameters
+      const diet = req.query.diet;
+  
+      // Validate that a valid diet is provided
+      if (!diet || typeof diet !== 'string') {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid input. Diet is required.',
+        });
+      }
+  
+      // Find recipes by diet
+      const recipes = await recipesCollection.find({
+        'diet': diet.toLowerCase(), 
+      }).toArray();
+  
+      res.status(200).json({
+        status: 'success',
+        data: recipes,
+      });
+    } catch (error) {
+      console.error('Error fetching recipes by diet:', error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
+    }
+  });
+
+  sessionRouter.get('/byName', async (req: Request, res: Response) => {
+    try {
+      const db: Db = req.app.get('db');
+      const recipesCollection = db.collection('recipes');
+  
+      // Extract the name from the query parameters
+      const name = req.query.name;
+  
+      // Validate that a valid name is provided
+      if (!name || typeof name !== 'string') {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid input. Name is required.',
+        });
+      }
+  
+      // Find recipes by name (case-insensitive and partial match)
+      const recipes = await recipesCollection.find({
+        'name': { $regex: new RegExp(name, 'i') },
+      }).toArray();
+  
+      res.status(200).json({
+        status: 'success',
+        data: recipes,
+      });
+    } catch (error) {
+      console.error('Error fetching recipes by name:', error);
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error',
+      });
+    }
+  });
+
+export default sessionRouter;

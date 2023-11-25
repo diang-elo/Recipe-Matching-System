@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { MongoClient, Db } from 'mongodb';
-import ingredientRouter from './src/ingredients/index'; // Correcting the import path
+import ingredientRouter from './src/ingredients/index'; 
 import sessionRouter from './src/recipe/index';
 
 const app = express();
@@ -23,7 +23,7 @@ MongoClient.connect(mongoUrl)
 
     console.log('Connected to MongoDB');
   
-    // Set up routes and start the server
+    // Set up routes 
     app.use(cors());
     app.use(express.json());
     app.use('/ingredients', ingredientRouter);

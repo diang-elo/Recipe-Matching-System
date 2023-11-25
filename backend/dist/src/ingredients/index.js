@@ -17,9 +17,7 @@ const ingredientRouter = express_1.default.Router();
 // Define a route to get all ingredients
 ingredientRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Assuming you already have a reference to the MongoDB database (db) from the main app file
         const db = req.app.get('db');
-        // Assuming your ingredients collection is named 'ingredients'
         const ingredientsCollection = db.collection('ingredients');
         // Fetch all documents from the ingredients collection
         const ingredients = yield ingredientsCollection.find({}).toArray();
@@ -27,7 +25,22 @@ ingredientRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.json(ingredients);
     }
     catch (error) {
-        // Handle errors, log them, and send an appropriate response
+        console.error('Error fetching ingredients:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+ingredientRouter.get('/search', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const db = req.app.get('db');
+        const ingredientsCollection = db.collection('ingredients');
+        const nameQuery = req.query.name;
+        const query = nameQuery ? { name: new RegExp(nameQuery, 'i') } : {};
+        // Fetch documents from the ingredients collection based on the query
+        const ingredients = yield ingredientsCollection.find(query).toArray();
+        // Send the fetched ingredients as a JSON response
+        res.json(ingredients);
+    }
+    catch (error) {
         console.error('Error fetching ingredients:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }

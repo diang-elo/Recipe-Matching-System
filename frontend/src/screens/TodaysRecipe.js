@@ -1,8 +1,18 @@
-function TodaysRecipe(){
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
-    return(
-        <div>
-            <h1>Today's Recipe</h1>
-        </div>)
+function TodaysRecipe() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/info/25");
+  }, []);
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <PacmanLoader color="##EFFDF4" />
+    </div>
+  );
 }
-export default TodaysRecipe
+export default TodaysRecipe;

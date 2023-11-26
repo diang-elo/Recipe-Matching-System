@@ -2,8 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import PacmanLoader from "react-spinners/PacmanLoader";
+
 function Info() {
   const [searchRecipe, setSearchedRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   let params = useParams();
 
   const getSearch = (e) => {
@@ -15,6 +18,7 @@ function Info() {
       .then(function (response) {
         console.log(response);
         setSearchedRecipe(response.data.data);
+        setIsLoading(false);
       })
       .catch(function (error) {
         // handle error
@@ -25,10 +29,14 @@ function Info() {
     getSearch(params.term);
   }, [params.term]);
 
-  console.log(searchRecipe);
-
-  return !searchRecipe ? (
-    <div>Error</div>
+  return isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <PacmanLoader color="##EFFDF4" />
+    </div>
+  ) : !searchRecipe ? (
+    <div className="flex items-center justify-center h-screen">
+      <div className="text-4xl">Error Finding Recipe</div>
+    </div>
   ) : (
     <>
       <div className=" text-lime-800 py-6">
@@ -53,6 +61,13 @@ function Info() {
             Recipe Description
           </h2>
           <p className="text-gray-600">{searchRecipe.desc}</p>
+        </div>
+        {/* Recipe prep time */}
+        <div className="mb-6 ">
+          <h2 className="text-2xl font-bold text-lime-800">Preparation Time</h2>
+          <p className="text-gray-600">
+            {searchRecipe.preperationTime} minutes
+          </p>
         </div>
         {/* Recipe Ingredients */}
         <div className="mb-6">

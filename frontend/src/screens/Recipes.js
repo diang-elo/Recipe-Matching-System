@@ -64,7 +64,7 @@ function Recipes() {
 
   return isLoading ? (
     <div className="flex items-center justify-center h-screen">
-      <PacmanLoader color="##EFFDF4" />
+      <PacmanLoader color="#36d7b7" />
     </div>
   ) : searchedRecipe.length === 0 ? (
     <div className="flex items-center justify-center h-screen">

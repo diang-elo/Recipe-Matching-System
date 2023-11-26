@@ -11,7 +11,7 @@ function TodaysRecipe() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <PacmanLoader color="##EFFDF4" />
+      <PacmanLoader color="#36d7b7" />
     </div>
   );
 }

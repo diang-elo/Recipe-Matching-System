@@ -145,16 +145,28 @@ function Landing() {
 
         <div class="flex justify-center">
           <RecipeCard
-            title="Mocha Latte"
-            img="https://athome.starbucks.com/sites/default/files/styles/homepage_banner_xlarge/public/2021-06/CaffeMocha_Header.jpg.webp?itok=O9FqK5Y_"
+            title="Mediterranean Salad"
+            img="https://ifoodreal.com/wp-content/uploads/2023/08/sauteed-broccoli.jpg"
+            recipeID={10}
+            subTitle={
+              "A refreshing and colorful salad that combines the best of Mediterranean flavors with fresh herbs and citrus dressing."
+            }
           />
           <RecipeCard
-            title="Mocha Latte"
-            img="https://athome.starbucks.com/sites/default/files/styles/homepage_banner_xlarge/public/2021-06/CaffeMocha_Header.jpg.webp?itok=O9FqK5Y_"
+            title="Lemon-Lime Refresher"
+            img="https://mommakesdinner.com/wp-content/uploads/2023/04/Starbucks-cool-lime-refresher-12-720x720.jpg"
+            recipeID={22}
+            subTitle={
+              "A zesty and invigorating drink, perfect for cooling down on a hot day, with a surprising hint of black pepper."
+            }
           />
           <RecipeCard
-            title="Mocha Latte"
-            img="https://athome.starbucks.com/sites/default/files/styles/homepage_banner_xlarge/public/2021-06/CaffeMocha_Header.jpg.webp?itok=O9FqK5Y_"
+            title="Vegetable Stir-Fry with Rice"
+            img="https://www.dinneratthezoo.com/wp-content/uploads/2016/10/veggie-fried-rice-6.jpg"
+            recipeID={11}
+            subTitle={
+              "A vibrant and healthy stir-fry, featuring a variety of vegetables sautéed to perfection, served with fluffy rice."
+            }
           />
         </div>
       </div>

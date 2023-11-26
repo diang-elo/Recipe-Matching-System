@@ -9,8 +9,13 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Link to="/">Home</Link>
-          <Link to="/todays-recipe">Today's Recipe</Link>
+          <Link to="/">
+            {" "}
+            <div className="cursor-pointer">Home</div>
+          </Link>
+          <Link to="/todays-recipe">
+            <div className="cursor-pointer">Today's Recipe</div>
+          </Link>
         </nav>
         <Routes>
           <Route path="/" element={<Landing />} />

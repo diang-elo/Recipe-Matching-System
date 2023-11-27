@@ -1,5 +1,7 @@
 # Recipe-Matching-System
 
+To run our code locally, do the following in order (backend first, then frontend)
+
 ## Backend
 ### Starting the repo on your local server
 cd to backend folder by running in terminal:
@@ -11,7 +13,7 @@ then run the following to install packages dependencies.
 Next start the development server by:
 `npm run dev`
 
-You may now call endpoints by visiting http://localhost:3000/
+You may now call endpoints by visiting http://localhost:10000/
 
 ## Frontend
 ### Starting the repo on your local server

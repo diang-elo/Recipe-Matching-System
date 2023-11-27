@@ -2,6 +2,8 @@
 
 To run our code locally, do the following in order (backend first, then frontend)
 
+Hosted frontend uses hosted-frontend branch. Hosted Backend uses main brach.
+
 ## Backend
 ### Starting the repo on your local server
 cd to backend folder by running in terminal:

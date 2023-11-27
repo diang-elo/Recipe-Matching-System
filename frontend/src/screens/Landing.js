@@ -14,7 +14,7 @@ function Landing() {
   const getSearch = async () => {
     try {
       const response = await axios.get(
-        `https://recipe-backend-2op5.onrender.com/ingredients/search?name=${searchName}`,
+        `http://localhost:10000/ingredients/search?name=${searchName}`,
         { timeout: 5000 }
       );
       setSearchResults(response.data);

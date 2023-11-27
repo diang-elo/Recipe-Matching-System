@@ -15,18 +15,16 @@ function Recipes() {
   let endpoint = "";
   let request = "";
   if (key === "byIngredient") {
-    endpoint = "https://recipe-backend-2op5.onrender.com/recipes/byIngredients";
+    endpoint = "http://localhost:10000/recipes/byIngredients";
     request = "post";
     value = value.split(",").map(Number);
     value = { ingredientIds: value };
   } else if (key === "byDiet") {
     request = "get";
-    endpoint =
-      "https://recipe-backend-2op5.onrender.com/recipes/byDiet?diet=" + value;
+    endpoint = "http://localhost:10000/recipes/byDiet?diet=" + value;
   } else if (key === "byName") {
     request = "get";
-    endpoint =
-      "https://recipe-backend-2op5.onrender.com/recipes/byName?name=" + value;
+    endpoint = "http://localhost:10000/recipes/byName?name=" + value;
   }
 
   const getSearch = (e) => {

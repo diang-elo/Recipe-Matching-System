@@ -63,9 +63,12 @@ function Recipes() {
   console.log(searchedRecipe.length);
 
   return isLoading ? (
-    <div className="flex items-center justify-center h-screen">
-      <PacmanLoader color="#36d7b7" />
-    </div>
+    <div class="flex flex-col items-center justify-center h-screen">
+  <div class="mb-4">
+    <PacmanLoader color="#36d7b7" />
+  </div>
+  <p class="text-center text-[#36d7b7] font-bold">(First search may take up to 2 minutes to load. Backend hosted on free service and needs to wake up.)</p>
+</div>
   ) : searchedRecipe.length === 0 ? (
     <div className="flex items-center justify-center h-screen">
       <div className="text-4xl">Does not exist</div>
